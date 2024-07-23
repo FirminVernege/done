@@ -60,3 +60,17 @@ class TokenData(BaseModel):
 class Rental(BaseModel):
     vehicle_id: int
     dir: Literal[0, 1]
+
+
+class CustomerBase(BaseModel):
+    name: str
+    address: str
+    license_number: str
+    date_of_birth: str
+    license_expiration_date: str
+
+
+class CustomerOut(CustomerBase):
+    Customer: CustomerBase
+    id: int
+    created_at: datetime
