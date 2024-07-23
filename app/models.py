@@ -50,4 +50,7 @@ class Customer(Base):
     license_number = Column(String, nullable=False, unique=True)
     date_of_birth = Column(String, nullable=False)
     license_expiration_date = Column(String, nullable=False)
+
     created_at = Column(TIMESTAMP(timezone=True), server_default=text("NOW()"))
+    created_by = Column(Integer, ForeignKey(
+        "users.id", ondelete="CASCADE"), nullable=False)

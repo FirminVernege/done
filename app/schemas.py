@@ -70,6 +70,10 @@ class CustomerBase(BaseModel):
     license_expiration_date: str
 
 
+class CustomerCreate(CustomerBase):
+    pass
+
+
 class CustomerOut(CustomerBase):
     Customer: CustomerBase
     id: int
