@@ -37,3 +37,17 @@ class Rental(Base):
                      primary_key=True, nullable=False)
     vehicle_id = Column(Integer, ForeignKey("vehicles.id", ondelete="CASCADE"),
                         primary_key=True, nullable=False)
+
+
+# Create a table to hold customer information
+
+class Customer(Base):
+    __tablename__ = 'customers'
+
+    id = Column(Integer, primary_key=True, nullable=False)
+    name = Column(String, nullable=False)
+    address = Column(String, nullable=False)
+    license_number = Column(String, nullable=False, unique=True)
+    date_of_birth = Column(String, nullable=False)
+    license_expiration_date = Column(String, nullable=False)
+    created_at = Column(TIMESTAMP(timezone=True), server_default=text("NOW()"))
