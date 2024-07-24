@@ -74,6 +74,12 @@ class CustomerCreate(CustomerBase):
     pass
 
 
+class Customer(CustomerBase):
+    id: int
+    created_at: datetime
+    created_by: int
+
+
 class CustomerOut(CustomerBase):
     Customer: CustomerBase
     id: int
