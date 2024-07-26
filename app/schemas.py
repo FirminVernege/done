@@ -62,6 +62,11 @@ class Rental(BaseModel):
     dir: Literal[0, 1]
 
 
+class RentalOut(BaseModel):
+    vehicle_id: int
+    user_id: int
+
+
 class CustomerBase(BaseModel):
     name: str
     address: str
@@ -80,7 +85,10 @@ class Customer(CustomerBase):
     created_by: int
 
 
-class CustomerOut(CustomerBase):
-    Customer: CustomerBase
+class CustomerOut(BaseModel):
+    Customer: Customer
     id: int
     created_at: datetime
+
+    class Config:
+        orm_mode: True

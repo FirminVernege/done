@@ -10,6 +10,14 @@ router = APIRouter(
 )
 
 
+@router.get("/", response_model=List[schemas.RentalOut])
+def get_rentals(db: Session = Depends(get_db), current_user: int = Depends(oauth2.get_current_user)):
+    rentals = db.query(models.Rental).filter(
+        models.Rental.user_id == current_user.id).all()
+
+    return rentals
+
+
 @router.post("/", status_code=status.HTTP_201_CREATED)
 def rental(rental: schemas.Rental, db: Session = Depends(get_db), current_user: int = Depends(oauth2.get_current_user)):
 
@@ -29,10 +37,10 @@ def rental(rental: schemas.Rental, db: Session = Depends(get_db), current_user: 
             raise HTTPException(status_code=status.HTTP_409_CONFLICT, detail=f"Vehicle with number plate {
                                 vehicle.numberplate=} has already been rented")
 
-        new_vote = models.Rental(
+        new_rental = models.Rental(
             vehicle_id=rental.vehicle_id, user_id=current_user.id)
 
-        db.add(new_vote)
+        db.add(new_rental)
 
         db.commit()
 

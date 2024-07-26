@@ -1,10 +1,9 @@
 from fastapi import FastAPI
 from . import models
-# from .database import engine
 from .routers import vehicle, user, auth, rental, customer
 from fastapi.middleware.cors import CORSMiddleware
 from .config import settings
-
+# from .database import engine
 # models.Base.metadata.create_all(bind=engine)
 # replaced with alembic
 

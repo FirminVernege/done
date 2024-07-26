@@ -40,7 +40,6 @@ def create_vehicle(vehicle: schemas.VehicleCreate, db: Session = Depends(get_db)
 
 @router.get("/{id}", response_model=schemas.VehicleOut)
 def get_vehicle(id: int, response: Response, db: Session = Depends(get_db), current_user: int = Depends(oauth2.get_current_user)):
-    vehicle = db.query(models.Vehicle).filter(models.Vehicle.id == id).first()
 
     vehicle = db.query(models.Vehicle, func.count(models.Rental.vehicle_id).label("rentals")).join(
         models.Rental, models.Rental.vehicle_id == models.Vehicle.id, isouter=True).group_by(models.Vehicle.id).filter(models.Vehicle.id == id).first()
