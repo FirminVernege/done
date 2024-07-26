@@ -41,8 +41,12 @@ class Rental(Base):
         "customers.id", ondelete="CASCADE"), nullable=False)
     created_at = Column(TIMESTAMP(timezone=True), server_default=text("NOW()"))
 
+    customer = Relationship("Customer")
+
+    vehicle = Relationship("Vehicle")
 
 # Create a table to hold customer information
+
 
 class Customer(Base):
     __tablename__ = 'customers'

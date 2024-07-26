@@ -57,16 +57,10 @@ class TokenData(BaseModel):
     id: Optional[str] = None
 
 
-class Rental(BaseModel):
+class RentalCreate(BaseModel):
     vehicle_id: int
     customer_id: int
     dir: Literal[0, 1]
-
-
-class RentalOut(BaseModel):
-    vehicle_id: int
-    customer_id: int
-    created_at: datetime
 
 
 class CustomerBase(BaseModel):
@@ -77,20 +71,30 @@ class CustomerBase(BaseModel):
     license_expiration_date: str
 
 
-class CustomerCreate(CustomerBase):
-    pass
-
-
 class Customer(CustomerBase):
     id: int
     created_at: datetime
     created_by: int
 
 
-class CustomerOut(BaseModel):
-    Customer: Customer
+class CustomerOut(Customer):
     id: int
     created_at: datetime
 
     class Config:
-        orm_mode: True
+        from_attributes: True
+
+
+class RentalOut(BaseModel):
+    vehicle_id: int
+    customer_id: int
+    created_at: datetime
+    customer: CustomerOut
+    vehicle: VehicleBase
+
+    class Config:
+        from_attributes = True
+
+
+class CustomerCreate(CustomerBase):
+    pass
