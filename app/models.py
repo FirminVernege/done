@@ -29,9 +29,17 @@ class User(Base):
     created_at = Column(TIMESTAMP(timezone=True),
                         nullable=False, server_default=text("now()"))
 
+# TODO: Remove default values for start and end date when app is created
+
 
 class Rental(Base):
     __tablename__ = 'rentals'
+
+    start_date = Column(TIMESTAMP(timezone=True),
+                        nullable=False, default=text('NOW()'))
+
+    end_date = Column(TIMESTAMP(timezone=True),
+                      nullable=False, default=text('NOW()'))
 
     user_id = Column(Integer, ForeignKey("users.id", ondelete="CASCADE"),
                      primary_key=True, nullable=False)
