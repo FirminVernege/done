@@ -59,12 +59,14 @@ class TokenData(BaseModel):
 
 class Rental(BaseModel):
     vehicle_id: int
+    customer_id: int
     dir: Literal[0, 1]
 
 
 class RentalOut(BaseModel):
     vehicle_id: int
-    user_id: int
+    customer_id: int
+    created_at: datetime
 
 
 class CustomerBase(BaseModel):

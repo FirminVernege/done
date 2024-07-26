@@ -39,6 +39,7 @@ class Rental(Base):
                         primary_key=True, nullable=False)
     customer_id = Column(Integer, ForeignKey(
         "customers.id", ondelete="CASCADE"), nullable=False)
+    created_at = Column(TIMESTAMP(timezone=True), server_default=text("NOW()"))
 
 
 # Create a table to hold customer information

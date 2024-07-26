@@ -22,11 +22,19 @@ def get_rentals(db: Session = Depends(get_db), current_user: int = Depends(oauth
 def rental(rental: schemas.Rental, db: Session = Depends(get_db), current_user: int = Depends(oauth2.get_current_user)):
 
     vehicle = db.query(models.Vehicle).filter(
-        models.Vehicle.id == rental.vehicle_id).first()
+        models.Vehicle.id == rental.vehicle_id).filter().first()
+
+    customer = db.query(models.Customer).filter(models.Customer.id == rental.customer_id).filter(
+    ).first()
+
+    if not customer:
+        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail=f"Customer with an id of {
+                            rental.customer_id} doesn't exist")
 
     if not vehicle:
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND,
                             detail=f"Vehicle with id of {rental.vehicle_id} doesn't exist")
+
     rental_query = db.query(models.Rental).filter(
         models.Rental.user_id == current_user.id).filter(models.Rental.vehicle_id == rental.vehicle_id, models.Rental.user_id == current_user.id)
 
@@ -38,7 +46,7 @@ def rental(rental: schemas.Rental, db: Session = Depends(get_db), current_user: 
                                 vehicle.numberplate=} has already been rented")
 
         new_rental = models.Rental(
-            vehicle_id=rental.vehicle_id, user_id=current_user.id)
+            vehicle_id=rental.vehicle_id, user_id=current_user.id, customer_id=rental.customer_id)
 
         db.add(new_rental)
 
