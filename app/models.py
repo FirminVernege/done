@@ -37,6 +37,8 @@ class Rental(Base):
                      primary_key=True, nullable=False)
     vehicle_id = Column(Integer, ForeignKey("vehicles.id", ondelete="CASCADE"),
                         primary_key=True, nullable=False)
+    customer_id = Column(Integer, ForeignKey(
+        "customers.id", ondelete="CASCADE"), nullable=False)
 
 
 # Create a table to hold customer information
