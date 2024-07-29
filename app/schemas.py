@@ -64,6 +64,7 @@ class TokenData(BaseModel):
 class RentalCreate(BaseModel):
     vehicle_id: int
     customer_id: int
+    calendar_color: str
     dir: Literal[0, 1]
 
 
@@ -92,6 +93,7 @@ class CustomerOut(Customer):
 class RentalOut(BaseModel):
     start_date: datetime
     end_date: datetime
+    calendar_color: str
     customer: CustomerOut
     vehicle: VehicleRental
 

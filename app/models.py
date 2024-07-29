@@ -41,6 +41,8 @@ class Rental(Base):
     end_date = Column(TIMESTAMP(timezone=True),
                       nullable=False, default=text('NOW()'))
 
+    calendar_color = Column(String, nullable=False)
+
     user_id = Column(Integer, ForeignKey("users.id", ondelete="CASCADE"),
                      primary_key=True, nullable=False)
     vehicle_id = Column(Integer, ForeignKey("vehicles.id", ondelete="CASCADE"),

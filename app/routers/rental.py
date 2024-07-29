@@ -48,7 +48,7 @@ def rental(rental: schemas.RentalCreate, db: Session = Depends(get_db), current_
                                 vehicle.numberplate} has already been rented")
 
         new_rental = models.Rental(
-            vehicle_id=rental.vehicle_id, user_id=current_user.id, customer_id=rental.customer_id)
+            vehicle_id=rental.vehicle_id, user_id=current_user.id, customer_id=rental.customer_id, calendar_color=rental.calendar_color)
 
         db.add(new_rental)
 
