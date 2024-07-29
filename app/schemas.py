@@ -23,6 +23,10 @@ class UserOut(BaseModel):
         from_attributes = True
 
 
+class VehicleRental(VehicleBase):
+    id: int
+
+
 class Vehicle(VehicleBase):
     id: int
     created_at: datetime
@@ -86,11 +90,10 @@ class CustomerOut(Customer):
 
 
 class RentalOut(BaseModel):
-    vehicle_id: int
-    customer_id: int
-    created_at: datetime
+    start_date: datetime
+    end_date: datetime
     customer: CustomerOut
-    vehicle: VehicleBase
+    vehicle: VehicleRental
 
     class Config:
         from_attributes = True

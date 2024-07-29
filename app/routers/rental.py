@@ -45,7 +45,7 @@ def rental(rental: schemas.RentalCreate, db: Session = Depends(get_db), current_
     if (rental.dir == 1):
         if found_rental:
             raise HTTPException(status_code=status.HTTP_409_CONFLICT, detail=f"Vehicle with number plate {
-                                vehicle.numberplate=} has already been rented")
+                                vehicle.numberplate} has already been rented")
 
         new_rental = models.Rental(
             vehicle_id=rental.vehicle_id, user_id=current_user.id, customer_id=rental.customer_id)
