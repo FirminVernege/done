@@ -44,14 +44,15 @@ def get_vehicle(id: int, response: Response, db: Session = Depends(get_db), curr
     vehicle = db.query(models.Vehicle, func.count(models.Rental.vehicle_id).label("rentals")).join(
         models.Rental, models.Rental.vehicle_id == models.Vehicle.id, isouter=True).group_by(models.Vehicle.id).filter(models.Vehicle.id == id).first()
 
+    if not vehicle:
+        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND,
+                            detail=f"Vehicle with an id of {id} was not found")
+
     vehicle = vehicle._mapping
 
     if vehicle.get("Vehicle").owner_id != current_user.id:
         raise HTTPException(status_code=status.HTTP_403_FORBIDDEN,
                             detail=f"Not authorized to perform requested action.")
-    if not vehicle:
-        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND,
-                            detail=f"Vehicle with an id of {id} was not found")
 
     return vehicle
 
