@@ -1,5 +1,5 @@
 from .database import Base
-from sqlalchemy import Column, Integer, String, Boolean, ForeignKey
+from sqlalchemy import Column, Integer, String, Boolean, ForeignKey, Float
 from sqlalchemy.sql.sqltypes import TIMESTAMP
 from sqlalchemy.sql.expression import text
 from sqlalchemy.orm import Relationship
@@ -9,11 +9,12 @@ class Vehicle(Base):
     __tablename__ = 'vehicles'
 
     id = Column(Integer, primary_key=True, nullable=False)
-    numberplate = Column(String, nullable=False)
+    numberplate = Column(String, nullable=False, unique=True)
     color = Column(String, nullable=False)
     rented = Column(Boolean, server_default="FALSE", nullable=False)
     created_at = Column(TIMESTAMP(timezone=True),
                         nullable=False, server_default=text("now()"))
+    price = Column(Float, nullable=False)
     owner_id = Column(Integer, ForeignKey(
         "users.id", ondelete="CASCADE"), nullable=False)
 
@@ -34,6 +35,8 @@ class User(Base):
 
 class Rental(Base):
     __tablename__ = 'rentals'
+    # TODO: Add id column back to rentals
+    # id = Column(Integer, primary_key=True, nullable=False)
 
     start_date = Column(TIMESTAMP(timezone=True),
                         nullable=False, default=text('NOW()'))
@@ -71,3 +74,16 @@ class Customer(Base):
     created_at = Column(TIMESTAMP(timezone=True), server_default=text("NOW()"))
     created_by = Column(Integer, ForeignKey(
         "users.id", ondelete="CASCADE"), nullable=False)
+
+
+class Sale(Base):
+    __tablename__ = 'sales'
+    # TODO: Add id back to sales table
+    # id = Column(Integer, primary_key=True, nullable=False)
+    vehicle_id = Column(Integer, ForeignKey("vehicles.id", ondelete="CASCADE"),
+                        primary_key=True, nullable=False)
+    owner_id = Column(Integer, ForeignKey(
+        "users.id", ondelete="CASCADE"), nullable=False)
+    discount = Column(Float, nullable=False, default=0)
+    price = Column(Float, nullable=False)
+    created_at = Column(TIMESTAMP(timezone=True), server_default=text("NOW()"))

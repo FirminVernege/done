@@ -1,6 +1,6 @@
 from fastapi import FastAPI
 from . import models
-from .routers import vehicle, user, auth, rental, customer
+from .routers import vehicle, user, auth, rental, customer, sale
 from fastapi.middleware.cors import CORSMiddleware
 from .config import settings
 # from .database import engine
@@ -25,6 +25,7 @@ app.include_router(user.router)
 app.include_router(auth.router)
 app.include_router(rental.router)
 app.include_router(customer.router)
+app.include_router(sale.router)
 
 
 @app.get("/")

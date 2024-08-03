@@ -7,6 +7,7 @@ from pydantic.types import conint
 class VehicleBase(BaseModel):
     numberplate: str
     color: str
+    price: float
     rented: bool = False
 
 
@@ -102,4 +103,14 @@ class RentalOut(BaseModel):
 
 
 class CustomerCreate(CustomerBase):
+    pass
+
+
+class SaleBase(BaseModel):
+    vehicle_id: int
+    discount: float
+    price: float
+
+
+class SaleCreate(SaleBase):
     pass

@@ -14,8 +14,6 @@ router = APIRouter(
 def get_rentals(db: Session = Depends(get_db), current_user: int = Depends(oauth2.get_current_user)):
     rentals = db.query(models.Rental).filter(
         models.Rental.user_id == current_user.id).all()
-    test = db.query(models.Rental).join(
-        models.Customer, models.Customer.id == models.Rental.customer_id, isouter=True).all()
 
     return rentals
 
