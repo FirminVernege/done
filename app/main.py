@@ -1,4 +1,6 @@
-from fastapi import FastAPI
+from fastapi import Depends, FastAPI
+
+from app import oauth2
 from . import models
 from .routers import vehicle, user, auth, rental, customer, sale
 from fastapi.middleware.cors import CORSMiddleware
@@ -29,5 +31,5 @@ app.include_router(sale.router)
 
 
 @app.get("/")
-def root():
+def root(current_user: int = Depends(oauth2.get_current_user)):
     return {"message": "Hello World"}
