@@ -63,6 +63,8 @@ class TokenData(BaseModel):
 
 
 class RentalCreate(BaseModel):
+    start_date: datetime
+    end_date: datetime
     vehicle_id: int
     customer_id: int
     calendar_color: str
