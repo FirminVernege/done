@@ -14,11 +14,11 @@ router = APIRouter(
 
 
 @router.get("/", response_model=List[schemas.VehicleOut])
-def get_vehicles(db: Session = Depends(get_db), current_user: int = Depends(oauth2.get_current_user), limit: int = 10, skip: int = 0, search: Optional[str] = ""):
+def get_vehicles(db: Session = Depends(get_db), current_user: int = Depends(oauth2.get_current_user), limit: int = 10, skip: int = 0, search: Optional[str] = "", rented: Optional[bool] = False):
 
     vehicles = db.query(models.Vehicle, func.count(models.Rental.vehicle_id).label("rentals")).join(
         models.Rental, models.Rental.vehicle_id == models.Vehicle.id, isouter=True).group_by(models.Vehicle.id).filter(
-        models.Vehicle.owner_id == current_user.id).filter(models.Vehicle.numberplate.contains(search)).limit(limit).offset(skip).all()
+        models.Vehicle.owner_id == current_user.id).filter(models.Vehicle.numberplate.contains(search)).filter(models.Vehicle.rented == rented).limit(limit).offset(skip).all()
     vehicles = list(map(lambda x: x._mapping, vehicles))
 
     return vehicles
