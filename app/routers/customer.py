@@ -59,7 +59,7 @@ def get_customer(id: int, db: Session = Depends(get_db), current_user: int = Dep
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND,
                             detail=f"Vehicle with an id of {id} does not exist")
 
-    if customer.created_by != customer.id:
+    if customer.created_by != current_user.id:
         raise HTTPException(status_code=status.HTTP_403_FORBIDDEN,
                             detail=f"Not authorized to perform requested action.")
     customer_query.delete(synchronize_session=False)

@@ -63,3 +63,13 @@ def rental(rental: schemas.RentalCreate, db: Session = Depends(get_db), current_
         db.commit()
 
         return {"message": "Successfully deleted rental"}
+
+
+@router.get("/{id}")
+def get_rental(id: int, response: Response, db: Session = Depends(get_db), current_user: int = Depends(oauth2.get_current_user)):
+    rental = db.query(models.Rental).filter(
+        models.Rental.user_id == current_user.id).first()
+    if not rental:
+        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND,
+                            detail=f"Rental with an id of {id} was not found")
+    return rental
