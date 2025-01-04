@@ -35,8 +35,8 @@ class User(Base):
 
 class Rental(Base):
     __tablename__ = 'rentals'
-    # TODO: Add id column back to rentals
-    # id = Column(Integer, primary_key=True, nullable=False)
+
+    id = Column(Integer, primary_key=True, nullable=False)
 
     start_date = Column(TIMESTAMP(timezone=True),
                         nullable=False, default=text('NOW()'))
@@ -47,9 +47,9 @@ class Rental(Base):
     calendar_color = Column(String, nullable=False)
 
     user_id = Column(Integer, ForeignKey("users.id", ondelete="CASCADE"),
-                     primary_key=True, nullable=False)
+                     nullable=False)
     vehicle_id = Column(Integer, ForeignKey("vehicles.id", ondelete="CASCADE"),
-                        primary_key=True, nullable=False)
+                        unique=True, nullable=False)
     customer_id = Column(Integer, ForeignKey(
         "customers.id", ondelete="CASCADE"), nullable=False)
     created_at = Column(TIMESTAMP(timezone=True), server_default=text("NOW()"))

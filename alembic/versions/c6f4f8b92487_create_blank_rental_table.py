@@ -1,8 +1,8 @@
-"""add customers Fkey to table
+"""Create blank rental table
 
-Revision ID: b7e2c2291bd5
-Revises: aba8d89add2f
-Create Date: 2024-07-23 15:52:46.131585
+Revision ID: c6f4f8b92487
+Revises: ec9a3ae75df3
+Create Date: 2025-01-03 22:59:18.004042
 
 """
 from typing import Sequence, Union
@@ -12,8 +12,8 @@ import sqlalchemy as sa
 
 
 # revision identifiers, used by Alembic.
-revision: str = 'b7e2c2291bd5'
-down_revision: Union[str, None] = 'aba8d89add2f'
+revision: str = 'c6f4f8b92487'
+down_revision: Union[str, None] = 'ec9a3ae75df3'
 branch_labels: Union[str, Sequence[str], None] = None
 depends_on: Union[str, Sequence[str], None] = None
 

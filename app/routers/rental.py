@@ -73,3 +73,25 @@ def get_rental(id: int, response: Response, db: Session = Depends(get_db), curre
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND,
                             detail=f"Rental with an id of {id} was not found")
     return rental
+
+
+@router.delete('/{id}')
+def delete_rental(id: int, response: Response, db: Session = Depends(get_db), current_user: int = Depends(oauth2.get_current_user)):
+
+    rental_query = db.query(models.Rental).filter(
+        models.Rental.user_id == current_user.id).filter(models.Rental.id == id)
+
+    rental = rental_query.first()
+
+    if rental == None:
+        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND)
+
+    if rental.user_id != current_user.id:
+        raise HTTPException(status_code=status.HTTP_403_FORBIDDEN,
+                            detail="Not authorized to perform requested action.")
+
+    rental_query.delete(synchronize_session=False)
+
+    db.commit()
+
+    return Response(status_code=status.HTTP_204_NO_CONTENT)
