@@ -94,6 +94,7 @@ class CustomerOut(Customer):
 
 
 class RentalOut(BaseModel):
+    id: int
     start_date: datetime
     end_date: datetime
     calendar_color: str

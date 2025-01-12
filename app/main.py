@@ -5,6 +5,7 @@ from . import models
 from .routers import vehicle, user, auth, rental, customer, sale
 from fastapi.middleware.cors import CORSMiddleware
 from .config import settings
+import ssl
 # from .database import engine
 # models.Base.metadata.create_all(bind=engine)
 # replaced with alembic
@@ -31,5 +32,5 @@ app.include_router(sale.router)
 
 
 @app.get("/")
-def root(current_user: int = Depends(oauth2.get_current_user)):
+def root():
     return {"message": "Hello World"}
