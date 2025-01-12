@@ -8,5 +8,7 @@ jobs:
     steps:
       - name: pulling git repo
         uses: actions/checkout@v2
-      - name: say hi
-        run: echo "hello world"
+      - name: Install python 3.12
+        uses: action/setup-python@v2
+        with: 
+          Python-version: "3.12"
