@@ -32,8 +32,8 @@ def test_login_user(client, test_user):
     ('wrongemail@test.com', 'test', 403),
     ("test@test.com", "wrongpassword", 403),
     ("wrongemail@test.com", "wrongpassword", 403),
-    (None, 'test', 422),
-    ("test@test.com", None, 422)
+    (None, 'test', 403),
+    ("test@test.com", None, 403)
 ])
 def test_incorrect_login(client, test_user, email, password, status_code):
     res = client.post(
