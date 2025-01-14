@@ -1,6 +1,7 @@
 services:
   api:
-    image: firminv/daone
+    image: firminv/done
+    platform: linux/amd64
     depends_on:
       - postgres
     ports:
