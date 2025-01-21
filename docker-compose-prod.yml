@@ -20,6 +20,7 @@ services:
 
   postgres:
     image: postgres:latest
+    platform: linux/amd64
     environment:
       - POSTGRES_PASSWORD=${DATABASE_PASSWORD}
       - POSTGRES_DB=${DATABASE_NAME}
