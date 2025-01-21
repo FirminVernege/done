@@ -1,6 +1,7 @@
 services:
   api:
     build: .
+    platform: linux/amd64
     depends_on:
       - postgres
     ports:
@@ -21,6 +22,7 @@ services:
 
   postgres:
     image: postgres:latest
+    platform: linux/amd64
     environment:
       - POSTGRES_PASSWORD=badlucked1
       - POSTGRES_DB=daone
