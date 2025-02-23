@@ -24,13 +24,22 @@ def create_user(user: schemas.UserCreate, db: Session = Depends(get_db)):
 
     new_user = models.User(**user.model_dump())
 
-    db.add(new_user)
+    user_query = db.query(models.User).filter(
+        models.User.email == new_user.email).first()
 
-    db.commit()
+    if user_query == None:
 
-    db.refresh(new_user)
+        db.add(new_user)
 
-    return new_user
+        db.commit()
+
+        db.refresh(new_user)
+
+        return new_user
+
+    else:
+        raise HTTPException(
+            status_code=status.HTTP_409_CONFLICT, detail="User already exists")
 
 
 @router.get("/{id}", response_model=schemas.UserOut)
