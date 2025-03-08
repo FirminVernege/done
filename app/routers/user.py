@@ -39,7 +39,7 @@ def create_user(user: schemas.UserCreate, db: Session = Depends(get_db)):
 
     else:
         raise HTTPException(
-            status_code=status.HTTP_409_CONFLICT, detail="User already exists")
+            status_code=status.HTTP_409_CONFLICT, detail="User already registered")
 
 
 @router.get("/{id}", response_model=schemas.UserOut)
