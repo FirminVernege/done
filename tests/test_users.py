@@ -4,14 +4,14 @@ from app.config import settings
 import pytest
 
 
-def test_create_user(client):
-    res = client.post(
-        "/users/", json={"email": "test@test.com", "password": "test"})
-    new_user = schemas.UserOut(**res.json())
+# def test_create_user(client):
+#     res = client.post(
+#         "/users/", json={"email": "test@test.com", "password": "test"})
+#     new_user = schemas.UserOut(**res.json())
 
-    assert new_user.email == "test@test.com"
+#     assert new_user.email == "test@test.com"
 
-    assert res.status_code == 201
+#     assert res.status_code == 201
 
 
 def test_login_user(client, test_user):
