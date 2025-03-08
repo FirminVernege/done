@@ -20,6 +20,7 @@ def get_users(db: Session = Depends(get_db), current_user: int = Depends(oauth2.
 def create_user():
 
     print('New User Created')
+    return {'Status Code': 'Success'}
 
 
 @router.get("/{id}", response_model=schemas.UserOut)
