@@ -16,13 +16,6 @@ def get_users(db: Session = Depends(get_db), current_user: int = Depends(oauth2.
     return users
 
 
-@router.post("/", status_code=status.HTTP_201_CREATED, response_model=schemas.UserOut)
-def create_user():
-
-    print('New User Created')
-    return {'Status Code': 'Success'}
-
-
 @router.get("/{id}", response_model=schemas.UserOut)
 def get_user(id: int, db: Session = Depends(get_db)):
     user = db.query(models.User).filter(models.User.id == id).first()
